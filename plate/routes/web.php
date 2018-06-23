@@ -17,14 +17,36 @@ Route::get('/', function () {
     return view('listen',compact('ls'));
 });
 
-Route::get('/{lsedit}', function ($id) {
+Route::get('/edit/{lsedit}', function ($id) {
     $lsedit = DB::table('listen')->find($id);
     return view('edit',compact('lsedit'));
 });
 
 Route::post('/edit', function(Request $request) {
-    $text = $request->text;
+    $text = $request->textSpecification;
     $id = $request->id;
-    DB::update('update listen set specification = ? where id = ? ', [$text,$id]);
+    DB::update('UPDATE listen SET specification = ? WHERE id = ? ', [$text,$id]);
+    return redirect('/');
+});
+
+Route::post('delete', function(Request $request) {
+    $submDelete = $request->submDelete;
+    DB::delete('DELETE FROM `listen` WHERE `listen`.`id` = ?', [$submDelete]);
+    return redirect('/');
+});
+
+
+Route::get('/create', function() {
+    return view('create');
+});
+
+
+Route::post('/create', function(Request $request) {
+    $author = $request->authorPlate;
+    $text = $request->textSpecification;
+    $name = $request->namePlate;
+    DB::insert( 'INSERT INTO listen '.
+                '(`id`, `author`, `titelName`, `specification`, `created_at`, `updated_at`)'.
+                ' VALUES (NULL, ?, ?, ?, CURRENT_TIME(), CURRENT_TIME())', [$author, $name,$text]);
     return redirect('/');
 });

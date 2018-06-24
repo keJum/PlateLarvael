@@ -1,21 +1,9 @@
-<?php
+@extends('layouts.app')
+@section('content')
 
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <title>Plate</title>
-</head>
-<body>
-<center>  
-    <br>
-    <form action="/create" method="GET">
-        <button type="submit" class="btn btn-success">Добавить</button>
-    </form>
+<br>
+
+@if(count($ls)>0)
     @foreach($ls as $lsOne)
     <br>
     <div class="card" style="width: 20rem">
@@ -33,7 +21,12 @@
         </div>
     </div>
     @endforeach
+    
+    <br>  
     <br>
-</center>
-</body>
-</html>
+    <form action="/create" method="GET">
+        <button type="submit" class="btn btn-success">Добавить</button>
+    </form>
+    <br>
+@endif  
+@endsection
